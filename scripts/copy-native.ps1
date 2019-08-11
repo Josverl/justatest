@@ -1,0 +1,1 @@
+../../pymakr-vsc/scripts/copy-native.ps1
