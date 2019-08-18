@@ -6,8 +6,19 @@
 trigger:
 - master
 
+strategy:
+  matrix:
+    linux:
+      imageName: 'ubuntu-16.04'
+   
+    Windows-core:
+       imagename: 'win1803'
+
+    mac:
+      imageName: 'macos-10.14'
+
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: $(imageName)
 
 steps:
 - task: NodeTool@0
@@ -16,6 +27,61 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    npm run hello1
+  displayName: 'run script - 1'
+
+- script: |
     npm install
-    npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm install'
+
+- script: |
+    npm run hello1
+  displayName: 'run script - 2'
+
+# - script: |
+#     pwsh --version
+#     if [ $? -eq 0 ]
+#     then
+#       echo "pwsh already installed, do not add another copy"
+#     else
+#       echo "installing pwsh via npm"
+#       npm install pwsh -g
+#     fi
+#   displayName: 'make sure that powershell core is installed'
+
+# - script: |
+#     npm install
+#   displayName: 'npm install'
+
+# - script: |
+#     npm run build
+#   displayName: 'npm build'
+
+# - script: |
+#     npm run package-prep
+#   displayName: 'npm prepare for vscode package'
+
+# - script: |
+#     npm test
+#   displayName: 'npm test'
+
+# - task: PublishTestResults@2
+#   inputs:
+#     testResultsFormat: 'XUnit'
+#     testResultsFiles: '**/TEST-*.xml'
+#     mergeTestResults: true
+#     displayName: 'Publish Test results'
+
+# - script: |
+#     npm run package
+#   displayName: 'npm package'
+
+# - task: CopyFiles@1
+#   inputs:
+#     SourceFolder: '$(System.DefaultWorkingDirectory)'
+#     Contents: |
+    
+#       *.vsix
+#     TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+# - task: PublishBuildArtifacts@1

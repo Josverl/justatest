@@ -1,13 +1,24 @@
 {
   "name": "justatest",
+  "publisher": "AtticWare",
+  "engines": {
+    "vscode": "^1.31.0"
+  },
+  "repository": "https://github.com/josverl/jostatest",
   "version": "1.0.0",
   "description": "testing pwsh and npm ",
   "main": "index.js",
   "scripts": {
-    "postinstall": "pwsh scripts/copy-native.ps1",
     "get-binaries": "pwsh scripts/mp-download.ps1",
-    "test": "mocha",
-    "power": "pwsh -command {write-host -f green Hoi}"
+    "postinstall": "pwsh hello2.ps1",
+    "build": "pwsh -command {write-host -f green 'insert typescript/babel transpiler here'}",
+    "test": "mocha -R xunit 2>&1 | tee test/TEST-report.xml ",
+    "package-prep": "npm install vsce -g",
+    "package": "vsce package",
+    "vscode:prepublish": "npm ci && npm prune",
+    "power": "pwsh -command {write-host -f green Hoi}",
+    "hello1": "pwsh ./scripts/hello1.ps1",
+    "hello2": "pwsh hello2.ps1"
   },
   "author": "Jos Verlinde",
   "license": "MIT",
@@ -17,10 +28,11 @@
     "node-abi": "^2.10.0",
     "nyc": "^14.1.1",
     "prebuild-install": "^5.3.0",
-    "pwsh": "^0.2.0",
+    "pwsh": "file:test/pwsh-0.2.2.tgz",
     "should": "^13.2.3"
   },
   "dependencies": {
-    "serialport": "^7.1.5"
+    "serialport": "^7.1.5",
+    "vsce": "^1.66.0"
   }
 }
